@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  title: Excel Report API
+  version: 1.0.0
+  description: API для генерации Excel отчетов
+
+paths:
+  /excel-report:
+    post:
+      summary: Генерирует Excel отчет по проекту (POST)
+      description: Принимает название проекта в теле запроса и возвращает Excel-файл с отчетом
+      operationId: generateExcelReportPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - projectName
+              properties:
+                projectName:
+                  type: string
+                  description: Название проекта
+      responses:
+        '200':
+          description: Excel-файл с отчетом
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Ошибка в запросе
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: ${FUNCTION_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID}
+    
+    get:
+      summary: Генерирует Excel отчет по проекту (GET)
+      description: Принимает название проекта в URL параметре и возвращает Excel-файл с отчетом
+      operationId: generateExcelReportGet
+      parameters:
+        - name: projectName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Название проекта
+      responses:
+        '200':
+          description: Excel-файл с отчетом
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Ошибка в запросе
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: ${FUNCTION_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID} 
