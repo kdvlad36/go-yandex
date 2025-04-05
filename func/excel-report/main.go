@@ -1,3 +1,4 @@
+// Package main обеспечивает функцию для генерации Excel отчетов
 package main
 
 import (

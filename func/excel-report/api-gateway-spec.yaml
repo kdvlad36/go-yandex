@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: Excel Report API
+  version: 1.0.0
+  description: API для генерации Excel отчетов
+
+paths:
+  /excel-report:
+    get:
+      summary: Получить Excel отчет по проекту
+      description: Генерирует и возвращает Excel отчет по указанному проекту
+      parameters:
+        - name: projectName
+          in: query
+          description: Название проекта для отчета
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Excel файл с отчетом
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: ${FUNCTION_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID}
+    post:
+      summary: Создать Excel отчет по проекту
+      description: Генерирует Excel отчет по данным проекта, переданным в JSON
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectName:
+                  type: string
+                  example: Проект X
+              required:
+                - projectName
+      responses:
+        '200':
+          description: Excel файл с отчетом
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: ${FUNCTION_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID} 

@@ -1,0 +1,63 @@
+openapi: 3.0.0
+info:
+  title: Hello World API
+  version: 1.0.0
+  description: Простой API для демонстрации работы с Yandex Cloud Functions
+
+paths:
+  /hello:
+    get:
+      summary: Получить приветствие
+      description: Возвращает приветственное сообщение с указанным именем
+      parameters:
+        - name: name
+          in: query
+          description: Имя для приветствия
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ с приветствием
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Привет, мир!
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: ${FUNCTION_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID}
+    post:
+      summary: Отправить имя для приветствия
+      description: Получает имя в формате JSON и возвращает персонализированное приветствие
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Иван
+              required:
+                - name
+      responses:
+        '200':
+          description: Успешный ответ с приветствием
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Привет, Иван!
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: ${FUNCTION_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID} 
