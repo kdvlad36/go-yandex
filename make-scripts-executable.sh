@@ -21,3 +21,4 @@ echo "Для деплоя используйте команды:"
 echo "  make deploy             - деплой с API Gateway"
 echo "  make deploy-without-api - деплой без API Gateway"
 echo "  make deploy-with-cron   - деплой с cron-триггером" 
+

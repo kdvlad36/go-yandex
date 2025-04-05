@@ -1,4 +1,4 @@
-module github.com/username/go-yandex
+module github.com/kdvlad36/go-yandex
 
 go 1.21
 

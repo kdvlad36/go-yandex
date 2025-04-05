@@ -158,6 +158,7 @@ else
 fi
 
 # Удаляем временные файлы go.mod и go.sum если они были скопированы из корня
-if [ "$USE_ROOT_GOMOD" = "true" ] && [ -f "${PROJECT_ROOT}/go.mod" ]; then
+if [ "$USE_ROOT_GOMOD" = "true" ]; then
+    echo "Удаляем временные файлы go.mod и go.sum из директории функции..."
     rm -f go.mod go.sum
 fi 
