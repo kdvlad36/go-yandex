@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  title: Container API
+  version: 1.0.0
+  description: API для доступа к сервису
+
+paths:
+  /:
+    get:
+      summary: Статус сервиса
+      description: Возвращает статус сервиса
+      responses:
+        '200':
+          description: Успешный ответ со статусом
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  service:
+                    type: string
+                    example: Container Service
+      x-yc-apigateway-integration:
+        type: serverless_containers
+        container_id: ${CONTAINER_ID}
+        service_account_id: ${SERVICE_ACCOUNT_ID}
+  
+  # Добавьте здесь другие пути и методы API для вашего контейнера 
